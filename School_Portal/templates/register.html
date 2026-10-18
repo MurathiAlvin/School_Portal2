@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Student Portal</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"
+            defer></script>
+</head>
+<body>
+    <main class="auth-container">
+        <section class="auth-card">
+            <h1>Create Account</h1>
+            <p>Register to access your Student Portal.</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="message {{ category }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endwith %}
+
+            <form action="{{ url_for('register') }}"
+                  method="POST" id="registerForm">
+
+                <input type="hidden" name="csrf_token"
+                       value="{{ csrf_token() }}">
+
+                <div class="form-group">
+                    <label for="full_name">Full Name</label>
+                    <input type="text" id="full_name" name="full_name"
+                           autocomplete="name" minlength="2"
+                           maxlength="100" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email"
+                           autocomplete="email" maxlength="254" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password"
+                           autocomplete="new-password" minlength="8"
+                           maxlength="128" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" id="confirm_password"
+                           name="confirm_password"
+                           autocomplete="new-password"
+                           minlength="8" maxlength="128" required>
+                    <small id="passwordMessage" aria-live="polite"></small>
+                </div>
+
+                <button type="submit" class="auth-button">
+                    Create Account
+                </button>
+            </form>
+
+            <p class="auth-footer">
+                Already registered?
+                <a href="{{ url_for('login') }}">Log in</a>
+            </p>
+        </section>
+    </main>
+</body>
+</html>
